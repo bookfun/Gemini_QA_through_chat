@@ -3,6 +3,8 @@ from PyPDF2 import PdfReader
 import streamlit as st
 import google.generativeai as genai
 import time
+import utils as utl
+
 
 def save_pdf_text(pdf_docs):
     text = ""
@@ -14,7 +16,6 @@ def save_pdf_text(pdf_docs):
 
 
 def main():
-
     # 设置网页信息
     st.set_page_config(
         page_title="Gemini PDF Chatbot",
@@ -41,13 +42,7 @@ def main():
         # 上传文件框
         pdf_docs = st.file_uploader(
             "Upload your PDF Files and Click on the Submit & Process Button", accept_multiple_files=True)
-        with open(st.session_state.markdown_name, "rb") as file:
-            btn = st.download_button(
-                label="Download file",
-                data=file,
-                file_name=st.session_state.markdown_name,
 
-            )
         # 上传的PDF转换成txt文件
         if st.button("Submit & Process"):
             with st.spinner("Processing..."):
@@ -64,6 +59,14 @@ def main():
                 st.session_state.messages = [
                     {"role": "assistant", "content": "ask me a question"}]
                 st.success("Done")
+
+        with open(st.session_state.markdown_name, "rb") as file:
+            btn = st.download_button(
+                label="Download file",
+                data=file,
+                file_name=st.session_state.markdown_name,
+
+            )
 
     # 配置语言模型
     genai.configure(api_key=Gemini_API_KEY)
@@ -138,3 +141,7 @@ def main():
             if response is not None:
                 message = {"role": "assistant", "content": response.text}
                 st.session_state.messages.append(message)
+
+
+if __name__ == "__main__":
+    main()
