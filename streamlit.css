@@ -1,0 +1,24 @@
+[data-testid="stAppViewBlockContainer"]{
+  max-width:70rem;
+}
+
+li,p{
+  font-size: 20px !important;
+}
+
+[data-testid="stBottomBlockContainer"]{
+    padding:1rem 1rem;
+    max-width:70rem;
+}
+table {
+  font-size: 20px !important;
+}
+
+header.st-emotion-cache-1avcm0n.ezrtsby2 {
+  display: none
+  
+}
+
+div.user-select-none.svg-container {
+  margin-top: 0;
+}
