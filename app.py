@@ -36,7 +36,7 @@ def main():
         markdown_path = st.session_state.markdown_path
 
     with st.sidebar:
-        Gemini_API_KEY = st.text_input("请输入Gemini API", type="password")
+        Gemini_API_KEY = st.text_input("Please input Gemini API", type="password")
         # 上传文件框
         pdf_docs = st.file_uploader(
             "Upload your PDF Files and Click on the Submit & Process Button", accept_multiple_files=True)
