@@ -3,8 +3,6 @@ from PyPDF2 import PdfReader
 import streamlit as st
 import google.generativeai as genai
 import time
-import utils as utl
-
 
 def save_pdf_text(pdf_docs):
     text = ""
