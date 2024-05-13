@@ -48,7 +48,6 @@ def main():
                 st.success("Done")
                 markdown_name = pdf_docs[0].name.replace("pdf", "md")
                 st.session_state.markdown_path = markdown_name
-                print(st.session_state.markdown_path)
 
         # 清空对话历史，包括消息记录，缓存的chat对象
         if st.button("clear chat history"):
@@ -108,8 +107,6 @@ def main():
                 context = text_docs
                 with open("context.txt", 'w', encoding='utf-8') as f:
                     f.truncate(0)
-            print(context)
-            print(prompt)
 
             while True:
                 try:
@@ -123,14 +120,12 @@ def main():
 
             # 网页显示markdown
             st.markdown(response.text)
-            print(markdown_path)
 
             # 保存大语言模型回复到磁盘
             with open(markdown_path, 'a', encoding='utf-8') as f:
                 f.write(response.text + '\n')
 
             # 终端输出回复
-            print(response.text)
             print(model.count_tokens(chat.history))
             # 缓存chat_session，以便下轮使用
             st.session_state.chat_session = chat
