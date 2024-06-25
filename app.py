@@ -12,24 +12,24 @@ def save_pdf_text(pdf_docs):
             for page in pdf_reader.pages:
                 file.write(page.extract_text())
 
-
 def main():
-    # 设置网页信息
+    # Set page configuration
     st.set_page_config(
         page_title="Gemini PDF Chatbot",
         page_icon="🤖"
     )
-    # 配置css
+
+    # Configure CSS
     with open("streamlit.css") as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-    # 设置网页标题
+    # Set page title
     st.title("Chat with PDF files using Gemini")
     st.write("Welcome to the chat!")
 
     markdown_path = "README.md"
 
-    # 初始化缓存markdown 文件名
+    # Initialize markdown cache filename
     if 'markdown_path' not in st.session_state:
         st.session_state.markdown_name = markdown_path
     else:
@@ -37,11 +37,12 @@ def main():
 
     with st.sidebar:
         Gemini_API_KEY = st.text_input("Please input Gemini API", type="password")
-        # 上传文件框
+        
+        # File uploader for PDFs
         pdf_docs = st.file_uploader(
             "Upload your PDF Files and Click on the Submit & Process Button", accept_multiple_files=True)
 
-        # 上传的PDF转换成txt文件
+        # Convert uploaded PDFs to text files
         if st.button("Submit & Process"):
             with st.spinner("Processing..."):
                 save_pdf_text(pdf_docs)
@@ -49,12 +50,13 @@ def main():
                 markdown_name = pdf_docs[0].name.replace("pdf", "md")
                 st.session_state.markdown_path = markdown_name
 
-        # 清空对话历史，包括消息记录，缓存的chat对象
-        if st.button("clear chat history"):
+        # Clear chat history, including messages and cached chat objects
+        if st.button("Clear chat history"):
             with st.spinner("Processing..."):
                 del st.session_state.chat_session
                 st.session_state.messages = [
-                    {"role": "assistant", "content": "ask me a question"}]
+                    {"role": "assistant", "content": "Ask me a question"}
+                ]
                 st.success("Done")
 
         with open(st.session_state.markdown_name, "rb") as file:
@@ -62,44 +64,41 @@ def main():
                 label="Download file",
                 data=file,
                 file_name=st.session_state.markdown_name,
-
             )
 
-    # 配置语言模型
+    # Configure language model
     genai.configure(api_key=Gemini_API_KEY)
     model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
-                                  system_instruction="你是一名资深专业证券分析师，请用中文回答")
+                                  system_instruction="You are a senior professional securities analyst. Please respond in Chinese.")
 
-    # 初始化chat对象
+    # Initialize chat object
     chat = model.start_chat(history=[])
 
-    # 初始化chat
+    # Initialize chat session
     if 'chat_session' not in st.session_state:
         st.session_state.chat_session = chat
     else:
         chat = st.session_state.chat_session
 
-    # 初始化messages
+    # Initialize messages
     if "messages" not in st.session_state.keys():
         st.session_state.messages = [
-            {"role": "assistant", "content": "ask me a question"}]
+            {"role": "assistant", "content": "Ask me a question"}
+        ]
 
-    # 显示所有对话信息
+    # Display all chat messages
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.write(message["content"])
 
-    # 读取用户输入，并在网页上显示
+    # Read user input and display on the web page
     if prompt := st.chat_input():
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.write(prompt)
 
-        # if st.session_state.messages[-1]["role"] != "assistant":
-        #     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
-
-            # 如果第一轮，则加载上下文
+            # If it's the first round, load context
             context = ""
             with open("context.txt", 'r', encoding='utf-8') as f:
                 text_docs = f.read()
@@ -110,27 +109,28 @@ def main():
 
             while True:
                 try:
-                    # 获取大语言模型回复
+                    # Get response from the generative model
                     response = chat.send_message(context + prompt)
-                    break  # 如果成功，则跳出循环
+                    break  # Exit loop if successful
                 except Exception as e:
-                    # 处理异常并继续重试
-                    print(f"错误：{e}")
-                    time.sleep(10)  # 等待 10 秒
+                    # Handle exceptions and retry
+                    print(f"Error: {e}")
+                    time.sleep(10)  # Wait for 10 seconds
 
-            # 网页显示markdown
+            # Display markdown on the web page
             st.markdown(response.text)
 
-            # 保存大语言模型回复到磁盘
+            # Save response to disk
             with open(markdown_path, 'a', encoding='utf-8') as f:
                 f.write(response.text + '\n')
 
-            # 终端输出回复
+            # Print model token count
             print(model.count_tokens(chat.history))
-            # 缓存chat_session，以便下轮使用
+
+            # Cache chat session for next round
             st.session_state.chat_session = chat
 
-            # 缓存大语言回复，以便下轮使用
+            # Cache response for next round
             if response is not None:
                 message = {"role": "assistant", "content": response.text}
                 st.session_state.messages.append(message)
