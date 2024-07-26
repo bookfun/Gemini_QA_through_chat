@@ -122,15 +122,13 @@ def main():
                 st.session_state.messages.append(message)
 
     with st.sidebar:
-        try:
-            with open(st.session_state.markdown_name, "rb") as file:
+        with open(st.session_state.markdown_name, "rb") as file:
                 btn = st.download_button(
                     label="Download file",
                     data=file,
                     file_name=st.session_state.markdown_name,
                 )
-        except Exception:
-            pass
+
 
 if __name__ == "__main__":
     main()
