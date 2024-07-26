@@ -24,7 +24,7 @@ def main():
     st.title("Chat with PDF files using Gemini")
     st.write("Welcome to the chat!")
 
-    markdown_name = "README.md"
+    markdown_name = "test.md"
 
     # Initialize markdown cache filename
     if 'markdown_name' not in st.session_state:
