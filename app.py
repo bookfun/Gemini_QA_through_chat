@@ -13,7 +13,6 @@ def save_pdf_text(pdf_docs):
                 file.write(page.extract_text())
 
 def main():
-    # Set page configuration
     st.set_page_config(
         page_title="Gemini PDF Chatbot",
         page_icon="🤖"
@@ -111,22 +110,18 @@ def main():
 
             while True:
                 try:
-                    # Get response from the generative model
                     response = chat.send_message(context + prompt)
-                    break  # Exit loop if successful
+                    break  
                 except Exception as e:
-                    # Handle exceptions and retry
                     print(f"Error: {e}")
-                    time.sleep(10)  # Wait for 10 seconds
+                    time.sleep(10)  
 
-            # Display markdown on the web page
             st.markdown(response.text)
 
-            # Save response to disk
             with open(st.session_state.markdown_name, 'a', encoding='utf-8') as f:
                 f.write(response.text + '\n')
 
-            # Print model token count
+
             print(model.count_tokens(chat.history))
 
             # Cache chat session for next round

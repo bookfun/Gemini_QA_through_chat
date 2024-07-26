@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Streamlit: Run app",
+        "type": "python",
+        "request": "launch",
+        "program": "/workspaces/Gemini_QA_through_chat/app.py",
+        "console": "integratedTerminal",
+        "args": [
+          "run",
+          "/workspaces/Gemini_QA_through_chat/app.py"
+        ],
+        "justMyCode": true
+      }
+    ]
+  }
+  
