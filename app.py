@@ -130,7 +130,7 @@ def main():
                     file_name=st.session_state.markdown_name,
                 )
         except FileNotFoundError:
-             print(f"file {file_path} not exist.")
+             print(f"file {st.session_state.markdown_name} not exist.")
 
 if __name__ == "__main__":
     main()
