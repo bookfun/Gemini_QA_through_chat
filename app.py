@@ -58,7 +58,8 @@ def main():
                     {"role": "assistant", "content": "Ask me a question"}
                 ]
                 st.success("Done")
-
+        
+        # save chat content
         with open(st.session_state.markdown_name, "rb") as file:
             btn = st.download_button(
                 label="Download file",
