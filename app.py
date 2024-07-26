@@ -49,6 +49,7 @@ def main():
                 st.success("Done")
                 markdown_name = pdf_docs[0].name.replace("pdf", "md")
                 st.session_state.markdown_path = markdown_name
+                print("markdown name from file：",st.session_state.markdown_path)
 
         # Clear chat history, including messages and cached chat objects
         if st.button("Clear chat history"):
