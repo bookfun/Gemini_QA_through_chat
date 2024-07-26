@@ -123,7 +123,7 @@ def main():
             st.markdown(response.text)
 
             # Save response to disk
-            with open(markdown_path, 'a', encoding='utf-8') as f:
+            with open(st.session_state.markdown_name, 'a', encoding='utf-8') as f:
                 f.write(response.text + '\n')
 
             # Print model token count
