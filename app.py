@@ -56,8 +56,6 @@ def main():
                     {"role": "assistant", "content": "Ask me a question"}
                 ]
                 st.success("Done")
-            # download chat content
-
 
     # Configure language model
     genai.configure(api_key=Gemini_API_KEY)
@@ -122,14 +120,17 @@ def main():
             if response is not None:
                 message = {"role": "assistant", "content": response.text}
                 st.session_state.messages.append(message)
-    with st.sidebar:
-        with open(st.session_state.markdown_name, "rb") as file:
-            btn = st.download_button(
-                label="Download file",
-                data=file,
-                file_name=st.session_state.markdown_name,
-            )
 
+    with st.sidebar:
+        try:
+            with open(st.session_state.markdown_name, "rb") as file:
+                btn = st.download_button(
+                    label="Download file",
+                    data=file,
+                    file_name=st.session_state.markdown_name,
+                )
+        except Exception:
+            pass
 
 if __name__ == "__main__":
     main()
