@@ -24,6 +24,19 @@ def main():
     st.title("Chat with PDF files using Gemini")
     st.write("Welcome to the chat!")
 
+    model_option = st.selectbox(
+        "Select a model to query:",
+        ("Gemini 1.5 Pro",
+         "Gemini 1.5 Flash",
+         "Gemini 1.0 Pro",
+         )
+    )
+
+    print(f"当前选择的模型：{model_option}")
+    model_dict = {"Gemini 1.0 Pro": "models/gemini-1.0-pro-latest",
+                  "Gemini 1.5 Flash": "models/gemini-1.5-flash-latest",
+                  "Gemini 1.5 Pro": "models/gemini-1.5-pro-latest"}
+
     markdown_name = "test.md"
 
     # Initialize markdown cache filename
@@ -59,7 +72,7 @@ def main():
 
     # Configure language model
     genai.configure(api_key=Gemini_API_KEY)
-    model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
+    model = genai.GenerativeModel(model_name=model_dict[model_option],
                                   system_instruction="You are a senior professional securities analyst. Please respond in Chinese.")
 
     # Initialize chat object
