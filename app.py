@@ -26,8 +26,8 @@ def main():
 
     model_option = st.selectbox(
         "Select a model to query:",
-        ("Gemini 1.5 Pro",
-         "Gemini 1.5 Flash",
+        ("Gemini 1.5 Flash",
+         "Gemini 1.5 Pro",
          "Gemini 1.0 Pro",
          )
     )
