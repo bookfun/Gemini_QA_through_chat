@@ -33,7 +33,7 @@ def main():
     )
 
     print(f"当前选择的模型：{model_option}")
-    model_dict = {"Gemini 1.0 Pro": "gemini-2.0-flash-thinking-exp",
+    model_dict = {"Gemini 1.0 Pro": "models/gemini-2.0-flash-thinking-exp",
                   "Gemini 1.5 Flash": "models/gemini-2.0-flash",
                   "Gemini 1.5 Pro": "models/gemini-2.0-pro-exp"}
 
