@@ -20,10 +20,6 @@ def main():
         page_icon="🤖"
     )
 
-    # Set page title
-    st.title("Chat with PDF files using Gemini")
-    st.write("Welcome to the chat!")
-
     model_option = st.selectbox(
         "Select a model to query:",
         ("Gemini 2.0 Flash Thinking",
