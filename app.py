@@ -22,7 +22,7 @@ def main():
 
     model_option = st.selectbox(
         "Select a model to query:",
-        ( "Gemini 2.0 Pro",
+        ( "Gemini 2.0 Pro exp",
          "Gemini 2.0 Flash Thinking",
          "Gemini 2.0 Flash",
          )
@@ -31,7 +31,7 @@ def main():
     print(f"当前选择的模型：{model_option}")
     model_dict = {"Gemini 2.0 Flash Thinking": "models/gemini-2.0-flash-thinking-exp",
                   "Gemini 2.0 Flash": "models/gemini-2.0-flash",
-                  "Gemini 2.0 Pro": "models/gemini-2.0-pro-exp"}
+                  "Gemini 2.0 Pro exp": "models/gemini-2.0-pro-exp"}
 
     markdown_name = "test.md"
 
